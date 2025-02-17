@@ -4,16 +4,25 @@
     <title>eBay Auth Callback</title>
 </head>
 <body>
+    <div id="debug"></div>
     <script>
-        // Get the authorization code from URL parameters
+        function log(message) {
+            console.log(message);
+            document.getElementById('debug').innerHTML += message + '<br>';
+        }
+
+        log('Page loaded');
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
         
+        log('URL: ' + window.location.href);
+        log('Code: ' + code);
+        
         if (code) {
-            // Redirect back to your app with the code
+            log('Attempting redirect to: freyaapp://oauth2/callback?code=' + code);
             window.location.href = `freyaapp://oauth2/callback?code=${code}`;
         } else {
-            document.body.innerHTML = 'No authorization code received';
+            log('No authorization code received');
         }
     </script>
 </body>
