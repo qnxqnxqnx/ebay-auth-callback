@@ -19,15 +19,26 @@
         log('Code: ' + code);
         
         if (code) {
-            // Decode the code before redirecting
-            const decodedCode = decodeURIComponent(code);
-            log('Decoded code: ' + decodedCode);
-            const redirectUrl = `freyaapp://oauth2/callback?code=${decodedCode}`;
+            const redirectUrl = `freyaapp://oauth2/callback?code=${encodeURIComponent(code)}`;
             log('Redirecting to: ' + redirectUrl);
+            
+            // Try multiple approaches to redirect
             window.location.href = redirectUrl;
+            window.location.replace(redirectUrl);
+            
+            // If still here after 1 second, show manual instructions
+            setTimeout(() => {
+                document.body.innerHTML = `
+                    <h3>Redirect failed</h3>
+                    <p>Please copy this code and return to the app:</p>
+                    <textarea onclick="this.select()">${code}</textarea>
+                    <p>Or click this link:</p>
+                    <a href="${redirectUrl}">Return to App</a>
+                `;
+            }, 1000);
         } else {
             log('No authorization code received');
         }
     </script>
 </body>
-</html>
+</html> 
