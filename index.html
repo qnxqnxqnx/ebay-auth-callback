@@ -19,8 +19,12 @@
         log('Code: ' + code);
         
         if (code) {
-            log('Attempting redirect to: freyaapp://oauth2/callback?code=' + code);
-            window.location.href = `freyaapp://oauth2/callback?code=${code}`;
+            // Decode the code before redirecting
+            const decodedCode = decodeURIComponent(code);
+            log('Decoded code: ' + decodedCode);
+            const redirectUrl = `freyaapp://oauth2/callback?code=${decodedCode}`;
+            log('Redirecting to: ' + redirectUrl);
+            window.location.href = redirectUrl;
         } else {
             log('No authorization code received');
         }
