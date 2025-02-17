@@ -22,11 +22,9 @@
             const redirectUrl = `freyaapp://oauth2/callback?code=${encodeURIComponent(code)}`;
             log('Redirecting to: ' + redirectUrl);
             
-            // Try multiple approaches to redirect
             window.location.href = redirectUrl;
             window.location.replace(redirectUrl);
             
-            // If still here after 1 second, show manual instructions
             setTimeout(() => {
                 document.body.innerHTML = `
                     <h3>Redirect failed</h3>
@@ -41,4 +39,4 @@
         }
     </script>
 </body>
-</html> 
+</html>
