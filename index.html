@@ -22,9 +22,11 @@
             const redirectUrl = `freyaapp://oauth2/callback?code=${encodeURIComponent(code)}`;
             log('Redirecting to: ' + redirectUrl);
             
+            // Try multiple approaches to redirect
             window.location.href = redirectUrl;
             window.location.replace(redirectUrl);
             
+            // If still here after 1 second, show manual instructions
             setTimeout(() => {
                 document.body.innerHTML = `
                     <h3>Redirect failed</h3>
@@ -36,7 +38,13 @@
             }, 1000);
         } else {
             log('No authorization code received');
+            document.body.innerHTML = `
+                <h3>Error</h3>
+                <p>No authorization code received from eBay.</p>
+                <p>URL Parameters:</p>
+                <pre>${JSON.stringify(Object.fromEntries(urlParams), null, 2)}</pre>
+            `;
         }
     </script>
 </body>
-</html>
+</html> 
